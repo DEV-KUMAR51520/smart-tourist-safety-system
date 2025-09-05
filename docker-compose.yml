@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # Database Services
+  postgres:
+    image: postgres:15
+    container_name: tourist_safety_db
+    environment:
+      POSTGRES_DB: tourist_safety
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - tourist_safety_network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: tourist_safety_redis
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - tourist_safety_network
+    restart: unless-stopped
+
+  # Backend Services
+  flask_backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tourist_safety_backend
+    environment:
+      - DATABASE_URL=postgresql://admin:${DB_PASSWORD}@postgres:5432/tourist_safety
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - JWT_SECRET_KEY=${JWT_SECRET}
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./backend:/app
+    networks:
+      - tourist_safety_network
+    restart: unless-stopped
+
+  ai_service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: tourist_safety_ai
+    environment:
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/1
+      - MODEL_PATH=/app/models
+    ports:
+      - "5001:5001"
+    depends_on:
+      - redis
+    volumes:
+      - ./ai-service:/app
+      - ai_models:/app/models
+    networks:
+      - tourist_safety_network
+    restart: unless-stopped
+
+  # Frontend Services
+  react_dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: tourist_safety_dashboard
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+      - REACT_APP_AI_URL=http://localhost:5001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - flask_backend
+    networks:
+      - tourist_safety_network
+    restart: unless-stopped
+
+networks:
+  tourist_safety_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  ai_models:
