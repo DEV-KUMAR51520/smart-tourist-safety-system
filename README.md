@@ -23,11 +23,11 @@ cd smart-tourist-safety-system
 ./scripts/run-development.sh
 ```
 
-### Access Points
+<!-- ### Access Points
 - **Mobile App**: Run on device/emulator via React Native
 - **Dashboard**: http://localhost:3000
 - **Backend API**: http://localhost:5000/api
-- **AI Service**: http://localhost:5001
+- **AI Service**: http://localhost:5001 -->
 
 ## 📋 System Components
 
@@ -59,12 +59,12 @@ cd smart-tourist-safety-system
     └─────────┘    └─────────┘    └─────────┘
 ```
 
-## 📖 Documentation
+<!-- ## 📖 Documentation
 
 - [System Architecture](docs/architecture/system-overview.md)
 - [API Documentation](docs/api/)
 - [Deployment Guide](docs/deployment/)
-- [User Guides](docs/user-guides/)
+- [User Guides](docs/user-guides/) -->
 
 ## 🛠️ Development
 
