@@ -3,6 +3,11 @@
 A comprehensive digital ecosystem that leverages AI, Blockchain, and IoT technologies to ensure tourist safety in remote and high-risk areas.
 
 ## 🚀 Quick Start
+TO deploy contract on Amoy chain
+```
+npx hardhat run scripts/deploy.js --network amoy
+```
+
 
 ### Prerequisites
 - Node.js 16+
