@@ -71,6 +71,23 @@ class BlockchainService {
       throw error;
     }
   }
+
+  async resolveIncident(touristId) {
+    try {
+      const tx = await contract.resolveIncident(touristId);
+      const receipt = await tx.wait();
+
+      if (receipt.status === 1) {
+        console.log(`Incident resolved for tourist ${touristId}.`);
+        return receipt.hash;
+      } else {
+        throw new Error("Transaction failed.");
+      }
+    } catch (error) {
+      console.error("Error resolving incident:", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = BlockchainService;

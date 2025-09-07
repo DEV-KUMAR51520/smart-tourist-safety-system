@@ -60,5 +60,24 @@ app.get('/api/blockchain/tourist/:id', async (req, res) => {
   }
 });
 
+app.post('/api/blockchain/resolve-incident', [
+  body('touristId').notEmpty().withMessage('Tourist ID is required'),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { touristId } = req.body;
+
+  try {
+    const txHash = await blockchainService.resolveIncident(touristId);
+    res.json({ txHash });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Blockchain Service Error');
+  }
+});
+
 const PORT = 5002;
 app.listen(PORT, () => console.log(`Blockchain microservice running on port ${PORT}`));

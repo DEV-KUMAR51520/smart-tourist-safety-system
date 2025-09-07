@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const db = require('../db');
-const auth = require('../middleware/auth'); // Import the JWT middleware
-// const yourBlockchainService = require('../../microservices/blockchain/blockchainService'); // Placeholder for your blockchain service
+const auth = require('../middleware/auth'); // Your JWT middleware
+const axios = require('axios'); // Add axios for inter-service communication
 
 // Validation middleware for registration
 const registerValidation = [
@@ -42,25 +42,30 @@ router.post('/register', registerValidation, async (req, res) => {
     const values = [name, phone, passwordHash, aadhaarHash, emergency_contact, entry_point, trip_duration];
     const newUserResult = await db.query(insertUserQuery, values);
     const newTourist = newUserResult.rows[0];
+
+    // The key change: Call the Blockchain Microservice via HTTP
     (async () => {
       try {
-        // Assume this function returns a blockchain ID after a delay
-        const blockchainId = await yourBlockchainService.createDigitalId("0x" + aadhaarHash);
-        // Update the tourist's record in the database
+        const response = await axios.post('http://localhost:5002/api/blockchain/register', {
+          aadhaarHash: aadhaarHash
+        });
+        const { blockchainId } = response.data;
+        
         const updateQuery = 'UPDATE tourists SET blockchain_id = $1 WHERE id = $2';
         await db.query(updateQuery, [blockchainId, newTourist.id]);
+
         console.log(`Successfully updated tourist ${newTourist.id} with blockchain ID: ${blockchainId}`);
       } catch (e) {
         console.error(`Failed to update blockchain ID for tourist ${newTourist.id}: ${e.message}`);
-        // Handle error, e.g., send a notification to a system admin
       }
     })();
+
     // Create and sign a JWT token
     const payload = {
       tourist: { id: newTourist.id },
     };
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    // Respond to the client immediately, without waiting for the blockchain process
+
     res.status(201).json({
       message: 'Tourist registered successfully. Your digital ID is being generated.',
       tourist: {

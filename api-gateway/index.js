@@ -4,6 +4,7 @@ const port = 5001;
 
 app.use(express.json());
 const authRoutes = require('./routes/auth.route');
+const touristRoutes = require('./routes/tourist.route');
 
 //Health check route
 app.get('/', (req, res) => {
@@ -12,7 +13,8 @@ app.get('/', (req, res) => {
         message: "Welcome to the Trailshield API Gateway!"
     });
 });
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/tourist', touristRoutes);
 
 //Server listening
 app.listen(port, () => {

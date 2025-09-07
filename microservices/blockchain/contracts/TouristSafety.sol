@@ -65,4 +65,9 @@ contract TouristSafety is ERC721, Ownable {
         require(touristIdToAadhaarHash[_touristId] != 0, "Tourist ID not found");
         return touristIdToAadhaarHash[_touristId];
     }
+
+    function resolveIncident(uint256 _touristId) external onlyOwner {
+        require(isIncidentActive[_touristId] == true, "No active incident for this tourist");
+        isIncidentActive[_touristId] = false;
+    }
 }
