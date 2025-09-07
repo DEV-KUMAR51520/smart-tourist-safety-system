@@ -1,0 +1,16 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Deploy API
+        run: |
+          curl -X POST "${{ secrets.DEPLOYURL }}" \
+            -H "Content-Type: application/json" \
+            -d '{"authtoken": "${{ secrets.DEPLOY_TOKEN }}"}'
