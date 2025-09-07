@@ -12,5 +12,4 @@ jobs:
       - name: Call Deploy API
         run: |
           curl -X POST "${{ secrets.DEPLOY_URL }}" \
-            -H "Content-Type: application/json" \
-            --data-raw '{"authtoken":"${{ secrets.DEPLOY_TOKEN }}"}'
+            -H "x-auth-token: ${{ secrets.DEPLOY_TOKEN }}"
