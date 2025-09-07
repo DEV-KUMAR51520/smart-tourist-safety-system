@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Alert,
   Vibration,
-  Animated
+  Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { LocationService } from '../../services/location/LocationService';
@@ -344,4 +344,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmergencyScreen;
+export default EmergencyScreen;``
