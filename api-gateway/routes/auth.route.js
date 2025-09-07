@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const db = require('../db');
 const auth = require('../middleware/auth'); // Import the JWT middleware
-const yourBlockchainService = require('../../microservices/blockchain/blockchainService'); // Placeholder for your blockchain service
+// const yourBlockchainService = require('../../microservices/blockchain/blockchainService'); // Placeholder for your blockchain service
 
 // Validation middleware for registration
 const registerValidation = [

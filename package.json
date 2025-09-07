@@ -1,0 +1,24 @@
+{
+  "name": "smart-tourist-safety-system",
+  "version": "1.0.0",
+  "description": "A comprehensive digital ecosystem that leverages AI, Blockchain, and IoT technologies to ensure tourist safety in remote and high-risk areas.",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix api-gateway\" \"npm run start --prefix microservices/blockchain\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEV-KUMAR51520/smart-tourist-safety-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DEV-KUMAR51520/smart-tourist-safety-system/issues"
+  },
+  "homepage": "https://github.com/DEV-KUMAR51520/smart-tourist-safety-system#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
