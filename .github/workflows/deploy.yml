@@ -13,4 +13,4 @@ jobs:
         run: |
           curl -X POST "${{ secrets.DEPLOY_URL }}" \
             -H "Content-Type: application/json" \
-            -d "{\"authtoken\": \"${{ secrets.DEPLOY_TOKEN }}\"}"
+            --data-raw '{"authtoken":"${{ secrets.DEPLOY_TOKEN }}"}'
