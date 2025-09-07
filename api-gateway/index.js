@@ -10,7 +10,7 @@ const touristRoutes = require('./routes/tourist.route');
 app.get('/', (req, res) => {
     res.json({
         status: "OK",
-        message: "Welcome to the Trailshield API Gateway!"
+        message: "Welcome to the Trailshield API"
     });
 });
 app.use('/auth', authRoutes);
