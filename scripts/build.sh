@@ -13,7 +13,12 @@ echo -e "${BLUE}========================================${NC}"
 echo ""
 
 step=1
-total=4
+total=5
+
+echo -e "${YELLOW}Step $step/$total: Installing dependencies for server environment...${NC}"
+npm install --silent
+echo -e "${GREEN}✓ server-environment done${NC}\n"
+((step++))
 
 echo -e "${YELLOW}Step $step/$total: Installing dependencies for api-gateway...${NC}"
 cd api-gateway && npm install --silent && cd ..

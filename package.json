@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run start --prefix api-gateway\" \"npm run start --prefix microservices/blockchain\"",
-    "build": "sudo chmod +x scripts/build.sh && ./scripts/build.sh"
+    "build": "sudo chmod +x scripts/build.sh && ./scripts/build.sh",
+    "ui": "concurrently \"npm run dev --prefix frontend/landing\" \"npm run dev --prefix frontend/dashboard\" \"npm run android --prefix mobile\""
   },
   "repository": {
     "type": "git",
