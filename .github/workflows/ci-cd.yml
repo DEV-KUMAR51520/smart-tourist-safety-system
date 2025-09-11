@@ -1,0 +1,157 @@
+name: Smart Tourist Safety System CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+    
+    - name: Install backend dependencies
+      run: cd backend && npm ci
+    
+    - name: Run backend tests
+      run: cd backend && npm test
+  
+  test-mobile:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: mobile/package-lock.json
+    
+    - name: Install mobile dependencies
+      run: cd mobile && npm ci
+    
+    - name: Run mobile tests
+      run: cd mobile && npm test
+  
+  test-blockchain:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: blockchain/package-lock.json
+    
+    - name: Install blockchain dependencies
+      run: cd blockchain && npm ci
+    
+    - name: Run blockchain tests
+      run: cd blockchain && npx hardhat test
+  
+  test-frontend:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: frontend/dashboard/package-lock.json
+    
+    - name: Install frontend dependencies
+      run: cd frontend/dashboard && npm ci
+    
+    - name: Run frontend tests
+      run: cd frontend/dashboard && npm test
+  
+  build-and-deploy:
+    needs: [test-backend, test-mobile, test-blockchain, test-frontend]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    
+    # Build backend
+    - name: Build backend
+      run: |
+        cd backend
+        npm ci
+        npm run build
+    
+    # Build frontend
+    - name: Build frontend
+      run: |
+        cd frontend/dashboard
+        npm ci
+        npm run build
+    
+    # Build mobile app
+    - name: Build mobile app
+      run: |
+        cd mobile
+        npm ci
+        npm run build
+    
+    # Deploy to staging environment
+    - name: Deploy to staging
+      run: |
+        echo "Deploying to staging environment..."
+        # Add deployment scripts here
+        # For example:
+        # - Deploy backend to cloud server
+        # - Deploy frontend to static hosting
+        # - Deploy mobile app to app stores
+    
+    # Notify deployment status
+    - name: Notify deployment status
+      run: |
+        echo "Deployment completed successfully!"
+        # Add notification scripts here (e.g., Slack, email)
+
+  # Scheduled security scan
+  security-scan:
+    runs-on: ubuntu-latest
+    # Run weekly on Sunday
+    if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * 0'
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Run security scan
+      run: |
+        echo "Running security scan..."
+        # Add security scanning tools here
+        # For example:
+        # - npm audit
+        # - OWASP dependency check
+        # - Static code analysis
+    
+    - name: Report security issues
+      run: |
+        echo "Security scan completed!"
+        # Add reporting scripts here

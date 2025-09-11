@@ -1,6 +1,6 @@
 # Smart Tourist Safety Monitoring & Incident Response System
 
-A comprehensive digital ecosystem that leverages AI, Blockchain, and IoT technologies to ensure tourist safety in remote and high-risk areas.
+A comprehensive digital ecosystem that leverages AI, Blockchain, and IoT technologies to ensure tourist safety in remote and high-risk areas. The system now features enhanced real-time tourist tracking with heat maps and complete IoT integration for smart bands/tags.
 
 ## 🚀 Quick Start
 TO deploy contract on Amoy chain
@@ -37,11 +37,11 @@ cd smart-tourist-safety-system
 ## 📋 System Components
 
 1. **Mobile App** (React Native) - Tourist safety interface
-2. **Web Dashboard** (React.js) - Emergency response center  
-3. **Backend API** (Flask) - Core business logic
+2. **Web Dashboard** (Next.js) - Emergency response center with real-time tracking and heat maps
+3. **Backend API** (Express.js) - Core business logic
 4. **AI Service** (TensorFlow) - Anomaly detection & risk assessment
 5. **Blockchain** (Polygon) - Digital identity & immutable records
-6. **IoT Simulation** - Smart device integration
+6. **IoT Integration** - Smart band/tag connectivity with real-time data processing
 
 ## 🏗️ Architecture
 
@@ -64,12 +64,11 @@ cd smart-tourist-safety-system
     └─────────┘    └─────────┘    └─────────┘
 ```
 
-<!-- ## 📖 Documentation
+## 📖 Documentation
 
-- [System Architecture](docs/architecture/system-overview.md)
-- [API Documentation](docs/api/)
-- [Deployment Guide](docs/deployment/)
-- [User Guides](docs/user-guides/) -->
+- [System Documentation](docs/system_documentation.md) - Technical overview and architecture
+- [User Guide](docs/user_guide.md) - Guide for tourists and administrators
+- [Developer Guide](docs/developer_guide.md) - Guide for developers
 
 ## 🛠️ Development
 

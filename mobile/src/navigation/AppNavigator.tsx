@@ -9,7 +9,10 @@ import AuthNavigator from './AuthNavigator';
 import DashboardScreen from '../screens/dashboard/DashboardScreen';
 import MapScreen from '../screens/maps/MapScreen';
 import EmergencyScreen from '../screens/emergency/EmergencyScreen';
+import EmergencyTrackingScreen from '../screens/emergency/EmergencyTrackingScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
+import DigitalIDScreen from '../screens/auth/DigitalIDScreen';
+import GeofencingScreen from '../screens/maps/GeofencingScreen';
 import { useAuthContext } from '../contexts/AuthContext';
 
 const Tab = createBottomTabNavigator();
@@ -51,6 +54,15 @@ const MainTabs = () => (
   </Tab.Navigator>
 );
 
+const MainStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="MainTabs" component={MainTabs} />
+    <Stack.Screen name="DigitalID" component={DigitalIDScreen} />
+    <Stack.Screen name="EmergencyTracking" component={EmergencyTrackingScreen} />
+    <Stack.Screen name="Geofencing" component={GeofencingScreen} />
+  </Stack.Navigator>
+);
+
 const AppNavigator: React.FC = () => {
   const { isAuthenticated } = useAuthContext();
 
@@ -58,7 +70,7 @@ const AppNavigator: React.FC = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isAuthenticated ? (
-          <Stack.Screen name="Main" component={MainTabs} />
+          <Stack.Screen name="Main" component={MainStack} />
         ) : (
           <Stack.Screen name="Auth" component={AuthNavigator} />
         )}
