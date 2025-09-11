@@ -1,0 +1,191 @@
+{
+  "testUsers": [
+    {
+      "id": "test-user-1",
+      "description": "Valid user with all required fields",
+      "data": {
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "phone": "9876543210",
+        "aadhaarNumber": "123456789012",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "15/07/2023",
+        "tripEndDate": "22/07/2023",
+        "nationality": "Indian",
+        "entryPoint": "Delhi Airport",
+        "itinerary": "Delhi - Agra - Jaipur"
+      },
+      "expectedResult": "success"
+    },
+    {
+      "id": "test-user-2",
+      "description": "User with missing required fields",
+      "data": {
+        "name": "",
+        "email": "jane.smith@example.com",
+        "phone": "8765432109",
+        "aadhaarNumber": "",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "16/07/2023",
+        "tripEndDate": "23/07/2023",
+        "nationality": "Indian",
+        "entryPoint": "Mumbai Airport",
+        "itinerary": "Mumbai - Pune - Goa"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Name is required", "Aadhaar number is required"]
+    },
+    {
+      "id": "test-user-3",
+      "description": "User with invalid password (too short)",
+      "data": {
+        "name": "Robert Johnson",
+        "email": "robert.johnson@example.com",
+        "phone": "7654321098",
+        "aadhaarNumber": "234567890123",
+        "password": "Pass",
+        "confirmPassword": "Pass",
+        "tripStartDate": "17/07/2023",
+        "tripEndDate": "24/07/2023",
+        "nationality": "American",
+        "entryPoint": "Bangalore Airport",
+        "itinerary": "Bangalore - Mysore - Coorg"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Password must be at least 8 characters"]
+    },
+    {
+      "id": "test-user-4",
+      "description": "User with mismatched passwords",
+      "data": {
+        "name": "Emily Wilson",
+        "email": "emily.wilson@example.com",
+        "phone": "6543210987",
+        "aadhaarNumber": "345678901234",
+        "password": "Password123",
+        "confirmPassword": "Password456",
+        "tripStartDate": "18/07/2023",
+        "tripEndDate": "25/07/2023",
+        "nationality": "British",
+        "entryPoint": "Chennai Airport",
+        "itinerary": "Chennai - Pondicherry - Mahabalipuram"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Passwords do not match"]
+    },
+    {
+      "id": "test-user-5",
+      "description": "User with invalid Aadhaar number (too short)",
+      "data": {
+        "name": "Michael Brown",
+        "email": "michael.brown@example.com",
+        "phone": "5432109876",
+        "aadhaarNumber": "45678901",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "19/07/2023",
+        "tripEndDate": "26/07/2023",
+        "nationality": "Australian",
+        "entryPoint": "Kolkata Airport",
+        "itinerary": "Kolkata - Darjeeling - Gangtok"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Aadhaar number must be 12 digits"]
+    },
+    {
+      "id": "test-user-6",
+      "description": "User with invalid email format",
+      "data": {
+        "name": "Sarah Davis",
+        "email": "sarah.davis@",
+        "phone": "4321098765",
+        "aadhaarNumber": "456789012345",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "20/07/2023",
+        "tripEndDate": "27/07/2023",
+        "nationality": "Canadian",
+        "entryPoint": "Hyderabad Airport",
+        "itinerary": "Hyderabad - Warangal - Tirupati"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Invalid email format"]
+    },
+    {
+      "id": "test-user-7",
+      "description": "User with invalid phone number format",
+      "data": {
+        "name": "David Miller",
+        "email": "david.miller@example.com",
+        "phone": "321abc",
+        "aadhaarNumber": "567890123456",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "21/07/2023",
+        "tripEndDate": "28/07/2023",
+        "nationality": "German",
+        "entryPoint": "Goa Airport",
+        "itinerary": "Goa - Panjim - Calangute"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Invalid phone number format"]
+    },
+    {
+      "id": "test-user-8",
+      "description": "User with invalid trip dates (end date before start date)",
+      "data": {
+        "name": "Jennifer Taylor",
+        "email": "jennifer.taylor@example.com",
+        "phone": "3210987654",
+        "aadhaarNumber": "678901234567",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "22/07/2023",
+        "tripEndDate": "15/07/2023",
+        "nationality": "French",
+        "entryPoint": "Jaipur Airport",
+        "itinerary": "Jaipur - Udaipur - Jodhpur"
+      },
+      "expectedResult": "validation_error",
+      "expectedErrors": ["Trip end date cannot be before start date"]
+    },
+    {
+      "id": "test-user-9",
+      "description": "Valid international tourist",
+      "data": {
+        "name": "Carlos Rodriguez",
+        "email": "carlos.rodriguez@example.com",
+        "phone": "2109876543",
+        "aadhaarNumber": "789012345678",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "23/07/2023",
+        "tripEndDate": "30/07/2023",
+        "nationality": "Spanish",
+        "entryPoint": "Kochi Airport",
+        "itinerary": "Kochi - Munnar - Alleppey"
+      },
+      "expectedResult": "success"
+    },
+    {
+      "id": "test-user-10",
+      "description": "Valid user with special characters in name",
+      "data": {
+        "name": "Marie-Élise O'Connor",
+        "email": "marie.elise@example.com",
+        "phone": "1098765432",
+        "aadhaarNumber": "890123456789",
+        "password": "Password123",
+        "confirmPassword": "Password123",
+        "tripStartDate": "24/07/2023",
+        "tripEndDate": "31/07/2023",
+        "nationality": "French",
+        "entryPoint": "Varanasi Airport",
+        "itinerary": "Varanasi - Allahabad - Lucknow"
+      },
+      "expectedResult": "success"
+    }
+  ]
+}
